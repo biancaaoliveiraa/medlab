@@ -1,0 +1,547 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #e3f2fd;
+  color: #000000;
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-screen-clean-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #e3f2fd;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.btn-voltar-topo-esquerdo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #0c9488;
+  border: 1px solid #b2e5dd;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(12, 148, 136, 0.1);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.btn-voltar-topo-esquerdo:hover {
+  background-color: #02b8a2;
+  color: #ffffff;
+}
+
+.login-clean-wrapper {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.login-logo-centered-box {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-logo-circle-img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.login-clean-wrapper h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #000000;
+  margin-top: 0;
+  margin-bottom: 22px;
+}
+
+.login-form-clean {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.input-field-group-clean {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 6px;
+}
+
+.input-field-group-clean label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.input-field-group-clean input {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0px 5px 16px rgba(0, 0, 0, 0.09);
+  box-sizing: border-box;
+  font-size: 1rem;
+  outline: none;
+  color: #000000;
+}
+
+.input-field-group-clean input::placeholder {
+  color: #999999;
+  font-size: 0.85rem;
+}
+
+.form-options-clean {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 0.88rem;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+.checkbox-label-clean {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #222222;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkbox-label-clean input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #bcbcbc !important;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.checkbox-label-clean input:checked {
+  background-color: #02b8a2;
+  border-color: #02b8a2 !important;
+}
+
+.checkbox-label-clean input:checked::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.forgot-password-clean-link {
+  color: #006EFF;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.forgot-password-clean-link:hover {
+  filter: brightness(0.8);
+}
+
+.btn-login-submit-final {
+  width: 100% !important;
+  padding: 14px !important;
+  background-color: #02c3a7 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  box-shadow: 0px 6px 16px rgba(2, 195, 167, 0.25) !important;
+  margin-top: 10px !important;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+}
+
+.btn-login-submit-final:hover {
+  background-color: #019480 !important; /* Efeito de hover mantido no verde escuro elegante */
+  box-shadow: 0px 6px 16px rgba(1, 148, 128, 0.3) !important;
+}
+
+/* ========================================= */
+/* CÓDIGO DA LANDING E PAINEL (MANTIDO INTACTO) */
+/* ========================================= */
+
+.medlab-landing {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.medlab-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 80px;
+  background-color: #ffffff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15), 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 8px;
+  position: relative;
+  z-index: 100;
+}
+
+.nav-left, .nav-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.nav-left { justify-content: flex-start; }
+.nav-center { display: flex; justify-content: center; align-items: center; }
+.nav-right { justify-content: flex-end; }
+
+.hamburger-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-menu-hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hamburger-dropdown-container:hover .btn-menu-hamburger {
+  background-color: rgba(1, 165, 150, 0.15);
+  transform: scale(1.05);
+}
+
+.hamburger-menu-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 260px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.hamburger-dropdown-container:hover .hamburger-menu-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(2px);
+  pointer-events: auto;
+}
+
+.menu-panel-item {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #222222;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+
+.menu-panel-item:hover {
+  background-color: #E5F8FF;
+  color: #3bafe0;
+  padding-left: 26px;
+}
+
+.logo-container { display: flex; align-items: center; }
+.logo-img { height: 85px; width: auto; object-fit: contain; display: block; }
+.nav-buttons { display: flex; gap: 20px; }
+
+.dropdown-container {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: -10px;
+}
+
+.btn-paciente, .btn-medico {
+  padding: 12px 24px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.btn-paciente { background-color: rgba(2, 184, 162, 1); }
+.btn-medico { background-color: rgba(59, 175, 224, 1); }
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.dropdown-container:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-menu a {
+  padding: 12px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+.menu-paciente { background-color: #e6f7f4; width: 100%; border-radius: 0 0 8px 8px; }
+.menu-paciente a { color: #017a6c; }
+.menu-paciente a:hover { background-color: #02b8a2; color: #ffffff; }
+
+.menu-medico { background-color: #e5f3fa; width: 100%; border-radius: 0 0 8px 8px; }
+.menu-medico a { color: #003750; }
+.menu-medico a:hover { background-color: #3bafe0; color: #ffffff; }
+
+.hero-section { background-color: #e3f2fd; text-align: center; padding: 60px 20px; }
+.hero-section h1 { color: #000000; font-size: 2.3rem; margin: 0 0 15px 0; font-weight: 700; }
+.hero-section p { color: #222222; font-size: 1.1rem; }
+
+.services-section {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 35px 0 45px 0;
+  text-align: center;
+  border-top: 1px solid #c1c1c1;
+  border-bottom: 1px solid #c1c1c1;
+}
+
+.services-section h2 { font-size: 2rem; margin-bottom: 30px; font-weight: 700; }
+.services-grid { display: flex; justify-content: center; gap: 24px; max-width: 1300px; margin: 0 auto; }
+
+.service-card {
+  background: #ffffff;
+  border: 1px solid #e4e7eb;
+  border-radius: 16px;
+  width: 380px;
+  padding: 35px 25px;
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.service-card:hover { transform: scale(1.03); }
+.icon-green-water { color: rgba(0, 95, 84, 0.90); }
+
+.integrated-blue-zone { background-color: #e3f2fd; padding-bottom: 60px; }
+.convenios-section { text-align: center; padding: 50px 0; }
+.convenios-section h2 { font-size: 2rem; font-weight: 700; }
+
+.convenios-grid { display: flex; gap: 32px; overflow-x: auto; padding: 20px 120px; }
+.convenios-grid::-webkit-scrollbar { display: none; }
+
+.convenio-card {
+  background: white;
+  border: 1px solid rgba(169, 169, 169, 0.5);
+  border-radius: 18px;
+  padding: 20px;
+  width: 250px;
+  min-width: 250px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.convenio-card:hover { transform: scale(1.03); }
+.convenio-logo-wrapper { width: 210px; height: 210px; background-color: #ffffff; display: flex; align-items: center; justify-content: center; }
+.convenio-logo-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.convenio-name { font-weight: 600; margin-top: 10px; }
+
+.cadastro-cta-section { text-align: center; padding-top: 15px; }
+.cadastro-cta-section h2 { font-size: 1.8rem; font-weight: 700; line-height: 1.3; }
+
+.btn-cadastro-cta {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 110, 255, 0.50);
+  padding: 18px 60px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-cadastro-cta:hover { transform: scale(1.03); background-color: #fafafa; }
+
+.medlab-footer { background-color: rgba(1, 165, 150, 0.5); text-align: center; padding: 8px 20px; font-size: 0.85rem; font-weight: 600; }
+
+.patient-dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #e3f2fd;
+}
+
+.dashboard-sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  border-right: 1px solid #edf2f7;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo img { height: 40px; margin-bottom: 40px; }
+
+.patient-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #edf2f7;
+  margin-bottom: 30px;
+}
+
+.avatar-placeholder {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #02b8a2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.profile-info h4 { margin: 0; font-size: 1rem; }
+.profile-info span { font-size: 0.85rem; color: #718096; }
+
+.sidebar-menu { display: flex; flex-direction: column; gap: 10px; flex-grow: 1; }
+
+.sidebar-item {
+  display: block;
+  padding: 14px 20px;
+  color: #4a5568;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 10px;
+}
+
+.sidebar-item.active, .sidebar-item:hover {
+  background-color: #e8f7f5;
+  color: #02b8a2;
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid #e2e8f0;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #e53e3e;
+}
+
+.btn-logout:hover { background-color: #fff5f5; }
+
+.dashboard-content { flex-grow: 1; padding: 40px; }
+.content-header h2 { margin: 0 0 10px 0; }
+.content-header p { margin: 0 0 40px 0; color: #4a5568; }
+
+.dashboard-card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.exam-list { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+
+.exam-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+}
+
+.exam-meta { display: flex; align-items: center; gap: 15px; }
+.icon-blue-file { color: #3182ce; }
+
+.btn-download-exam {
+  background-color: #02b8a2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
