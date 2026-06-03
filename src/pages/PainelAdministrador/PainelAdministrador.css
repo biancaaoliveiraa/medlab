@@ -1,0 +1,23 @@
+.painel-admin {
+  padding: 40px;
+}
+
+.painel-admin h1 {
+  color: #1f2937;
+  font-size: 32px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.painel-admin p {
+  color: #6b7280;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.cards-admin {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}

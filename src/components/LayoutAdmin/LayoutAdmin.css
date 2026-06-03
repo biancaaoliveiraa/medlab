@@ -1,0 +1,12 @@
+.layout-admin {
+  min-height: 100vh;
+  background: #dff2f7;
+}
+
+.conteudo-admin {
+  padding-bottom: 110px;
+}
+
+.conteudo-admin main {
+  padding: 30px;
+}
