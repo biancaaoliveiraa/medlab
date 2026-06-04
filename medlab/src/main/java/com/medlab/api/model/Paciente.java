@@ -1,135 +1,106 @@
 package com.medlab.api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "pacientes")
 public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-    private String dataNascimento;
+    @Column(nullable = false)
+    private String nomeCompleto;
+
+    @Column(nullable = false, unique = true)
     private String cpf;
+
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
+
     private String telefone;
+
+    @Column(nullable = false, unique = true)
     private String email;
-    private String convenio;
-    private String status;
 
-    private String doencaCronica;
-    private String medicamentoContinuo;
-    private String alergias;
-    private String tipoSanguineo;
-    private String observacoes;
+    @Column(nullable = false)
+    private String senha;
 
-    public Paciente() {
-    }
+    @Column(nullable = false)
+    private String tipoConvenio;
 
-    public Long getId() {
-        return id;
-    }
+    private String cep;
+    private String logradouro;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String estado;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "anamnese_id", referencedColumnName = "id")
+    private Anamnese anamnese;
 
-    public String getNome() {
-        return nome;
-    }
+    public Paciente() {}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(String dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
+    public Paciente(String nomeCompleto, String cpf, LocalDate dataNascimento, String telefone, String email, String senha, String tipoConvenio, Anamnese anamnese) {
+        this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
+        this.dataNascimento = dataNascimento;
         this.telefone = telefone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
+        this.senha = senha;
+        this.tipoConvenio = tipoConvenio;
+        this.anamnese = anamnese;
     }
 
-    public String getConvenio() {
-        return convenio;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setConvenio(String convenio) {
-        this.convenio = convenio;
-    }
+    public String getNomeCompleto() { return nomeCompleto; }
+    public void setNomeCompleto(String nomeCompleto) { this.nomeCompleto = nomeCompleto; }
 
-    public String getStatus() {
-        return status;
-    }
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public LocalDate getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
 
-    public String getDoencaCronica() {
-        return doencaCronica;
-    }
+    public String getTelefone() { return telefone; }
+    public void setTelefone(String telefone) { this.telefone = telefone; }
 
-    public void setDoencaCronica(String doencaCronica) {
-        this.doencaCronica = doencaCronica;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getMedicamentoContinuo() {
-        return medicamentoContinuo;
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-    public void setMedicamentoContinuo(String medicamentoContinuo) {
-        this.medicamentoContinuo = medicamentoContinuo;
-    }
+    public String getTipoConvenio() { return tipoConvenio; }
+    public void setTipoConvenio(String tipoConvenio) { this.tipoConvenio = tipoConvenio; }
 
-    public String getAlergias() {
-        return alergias;
-    }
+    public String getCep() { return cep; }
+    public void setCep(String cep) { this.cep = cep; }
 
-    public void setAlergias(String alergias) {
-        this.alergias = alergias;
-    }
+    public String getLogradouro() { return logradouro; }
+    public void setLogradouro(String logradouro) { this.logradouro = logradouro; }
 
-    public String getTipoSanguineo() {
-        return tipoSanguineo;
-    }
+    public String getNumero() { return numero; }
+    public void setNumero(String numero) { this.numero = numero; }
 
-    public void setTipoSanguineo(String tipoSanguineo) {
-        this.tipoSanguineo = tipoSanguineo;
-    }
+    public String getComplemento() { return complemento; }
+    public void setComplemento(String complemento) { this.complemento = complemento; }
 
-    public String getObservacoes() {
-        return observacoes;
-    }
+    public String getBairro() { return bairro; }
+    public void setBairro(String bairro) { this.bairro = bairro; }
 
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
+    public String getCidade() { return cidade; }
+    public void setCidade(String cidade) { this.cidade = cidade; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
+
+    public Anamnese getAnamnese() { return anamnese; }
+    public void setAnamnese(Anamnese anamnese) { this.anamnese = anamnese; }
 }
