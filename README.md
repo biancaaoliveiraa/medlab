@@ -270,14 +270,6 @@ Projeto desenvolvido como requisito acadêmico do curso de **Análise e Desenvol
 
 ---
 
-##  Equipe de Desenvolvimento
-
-* Bianca Oliveira
-* Jefferson Luiz
-* Integrantes da Equipe MedLab
-
----
-
 ##  Licença
 
 Projeto desenvolvido exclusivamente para fins acadêmicos e educacionais.
