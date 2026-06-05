@@ -1,0 +1,173 @@
+.login-admin-pagina {
+  min-height: 100vh;
+  width: 100%;
+  background: #dff4fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 18px;
+  position: relative;
+}
+
+.login-voltar {
+  position: absolute;
+  top: 28px;
+  left: 36px;
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-admin-card {
+  width: 100%;
+  max-width: 420px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-logo-area {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 26px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+}
+
+.login-logo-area img {
+  width: 105px;
+  height: auto;
+  display: block;
+}
+
+.login-admin-card h1 {
+  font-size: 22px;
+  color: #111827;
+  margin-bottom: 26px;
+  font-weight: 700;
+}
+
+.login-campo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.login-campo label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.login-campo input {
+  width: 100%;
+  height: 48px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background: #ffffff;
+  padding: 0 16px;
+  font-size: 14px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+}
+
+.login-campo input:focus {
+  box-shadow: 0 0 0 3px rgba(35, 198, 190, 0.22);
+}
+
+.login-lembrar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 34px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.login-lembrar input {
+  width: 15px;
+  height: 15px;
+}
+
+.login-botao {
+  width: 100%;
+  max-width: 240px;
+  height: 48px;
+  border: none;
+  border-radius: 10px;
+  background: #23c6be;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .login-admin-pagina {
+    align-items: flex-start;
+    padding-top: 70px;
+  }
+
+  .login-voltar {
+    top: 24px;
+    left: 22px;
+  }
+
+  .login-logo-area {
+    width: 145px;
+    height: 145px;
+    margin-bottom: 22px;
+  }
+
+  .login-logo-area img {
+    width: 90px;
+  }
+
+  .login-admin-card {
+    max-width: 360px;
+  }
+
+  .login-admin-card h1 {
+    font-size: 20px;
+  }
+
+  .login-botao {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 420px) {
+  .login-admin-card {
+    max-width: 100%;
+  }
+
+  .login-campo input {
+    height: 46px;
+  }
+
+  .login-logo-area {
+    width: 130px;
+    height: 130px;
+  }
+
+  .login-logo-area img {
+    width: 82px;
+  }
+}
+.mensagem-erro-login {
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 6px;
+}

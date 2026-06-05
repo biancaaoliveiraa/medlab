@@ -24,6 +24,18 @@ public class PacienteController {
     @Autowired
     private AgendamentosRepository agendamentosRepository;
 
+    @GetMapping
+    public ResponseEntity<List<Paciente>> listarPacientes() {
+        return ResponseEntity.ok(pacienteRepository.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Paciente> buscarPacientePorId(@PathVariable Long id) {
+        return pacienteRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> loginPaciente(@RequestBody Map<String, String> dadosLogin) {
         String email = dadosLogin.get("email");
@@ -53,9 +65,16 @@ public class PacienteController {
     public ResponseEntity<?> alterarDadosConta(@PathVariable Long id, @RequestBody Paciente dadosAtualizados) {
         return pacienteRepository.findById(id).map(paciente -> {
             paciente.setNomeCompleto(dadosAtualizados.getNomeCompleto());
+            paciente.setCpf(dadosAtualizados.getCpf());
+            paciente.setDataNascimento(dadosAtualizados.getDataNascimento());
             paciente.setTelefone(dadosAtualizados.getTelefone());
             paciente.setEmail(dadosAtualizados.getEmail());
             paciente.setSenha(dadosAtualizados.getSenha());
+            paciente.setTipoConvenio(dadosAtualizados.getTipoConvenio());
+            paciente.setObservacoes(dadosAtualizados.getObservacoes());
+            paciente.setTipoUsuario(dadosAtualizados.getTipoUsuario());
+            paciente.setStatus(dadosAtualizados.getStatus());
+
             pacienteRepository.save(paciente);
             return ResponseEntity.ok(paciente);
         }).orElse(ResponseEntity.notFound().build());
@@ -71,6 +90,7 @@ public class PacienteController {
             paciente.setBairro(endereco.get("bairro"));
             paciente.setCidade(endereco.get("cidade"));
             paciente.setEstado(endereco.get("estado"));
+
             pacienteRepository.save(paciente);
             return ResponseEntity.ok(paciente);
         }).orElse(ResponseEntity.notFound().build());
@@ -81,8 +101,10 @@ public class PacienteController {
         if (!pacienteRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
+
         List<Agendamentos> agendamentos = agendamentosRepository.findByPacienteId(id);
         agendamentosRepository.deleteAll(agendamentos);
+
         pacienteRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
@@ -101,6 +123,7 @@ public class PacienteController {
         if (!agendamentosRepository.existsById(agendamentoId)) {
             return ResponseEntity.notFound().build();
         }
+
         agendamentosRepository.deleteById(agendamentoId);
         return ResponseEntity.ok().build();
     }

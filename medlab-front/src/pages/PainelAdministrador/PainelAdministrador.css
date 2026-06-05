@@ -1,0 +1,33 @@
+.painel-admin {
+  padding: 40px;
+}
+
+.painel-admin h1 {
+  text-align: center;
+  font-size: 42px;
+  color: #111827;
+}
+
+.painel-admin p {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.cards-admin {
+  display: grid;
+
+  grid-template-columns: repeat(2, 320px);
+
+  justify-content: center;
+
+  gap: 50px;
+}
+
+@media (max-width: 900px) {
+  .cards-admin {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}

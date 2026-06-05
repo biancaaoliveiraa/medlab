@@ -1,0 +1,413 @@
+.convenios-container {
+  padding: 24px 36px;
+}
+
+.convenios-header {
+  margin-bottom: 18px;
+}
+
+.convenios-header h1 {
+  font-size: 28px;
+  color: #111827;
+  font-weight: 700;
+}
+
+.busca-convenios {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.campo-busca-convenio {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+
+.campo-busca-convenio input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+  background: white;
+  outline: none;
+}
+
+.lista-sugestoes-convenio {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+}
+
+.item-sugestao-convenio {
+  width: 100%;
+  border: none;
+  background: white;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 11px 14px;
+  cursor: pointer;
+}
+
+.item-sugestao-convenio strong {
+  font-size: 14px;
+  color: #111827;
+}
+
+.item-sugestao-convenio span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.lista-convenios {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  gap: 12px;
+}
+
+.card-convenio {
+  width: 100%;
+  min-height: 58px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-convenio > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-convenio strong {
+  font-size: 14px;
+  color: #111827;
+}
+
+.card-convenio span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.acoes-convenio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acoes-convenio button {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.editar-convenio {
+  background: #dbeafe;
+}
+
+.excluir-convenio {
+  background: #fee2e2;
+}
+
+.botao-novo-convenio {
+  width: 100%;
+  max-width: 1180px;
+  height: 42px;
+  margin: 22px auto 0;
+  border: none;
+  border-radius: 10px;
+  background: #23c6be;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.formulario-convenio-pagina {
+  padding: 24px;
+}
+
+.formulario-convenio-topo {
+  margin-bottom: 16px;
+}
+
+.formulario-convenio-topo button {
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.formulario-convenio-conteudo {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.formulario-convenio-conteudo span {
+  font-size: 14px;
+  color: #111827;
+  font-style: italic;
+}
+
+.formulario-convenio {
+  width: 100%;
+  background: #f1f1f1;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 14px;
+}
+
+.campo-convenio {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.campo-convenio label,
+.status-convenio label {
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: #111827;
+  font-style: italic;
+}
+
+.campo-convenio input,
+.campo-convenio textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  border-radius: 9px;
+  background: white;
+  padding: 0 12px;
+  font-size: 13px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
+}
+
+.campo-convenio input {
+  height: 40px;
+}
+
+.campo-convenio textarea {
+  min-height: 110px;
+  padding-top: 10px;
+  resize: none;
+}
+
+.linha-convenio {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.status-convenio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.botao-convenio {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-radius: 9px;
+  background: #23c6be;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.switch-convenio {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+}
+
+.switch-convenio input {
+  display: none;
+}
+
+.slider-convenio {
+  position: absolute;
+  inset: 0;
+  background: #d1d5db;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.slider-convenio::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.25s;
+}
+
+.switch-convenio input:checked + .slider-convenio {
+  background: #23c6be;
+}
+
+.switch-convenio input:checked + .slider-convenio::before {
+  transform: translateX(22px);
+}
+
+.mensagem-convenio {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  background: #23c6be;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+}
+
+.modal-convenio-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+}
+
+.modal-convenio-exclusao {
+  width: 100%;
+  max-width: 390px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.modal-convenio-icone {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  font-size: 24px;
+}
+
+.modal-convenio-exclusao h2 {
+  font-size: 20px;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.modal-convenio-exclusao p {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.modal-convenio-exclusao span {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+.modal-convenio-acoes {
+  display: flex;
+  gap: 12px;
+}
+
+.modal-convenio-acoes button {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-convenio-cancelar {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.modal-convenio-confirmar {
+  background: #dc2626;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .convenios-container {
+    padding: 18px;
+  }
+
+  .convenios-header h1 {
+    font-size: 24px;
+  }
+
+  .card-convenio {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .linha-convenio {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .modal-convenio-acoes {
+    flex-direction: column;
+  }
+}
+.erro-formulario {
+  width: 100%;
+  background: #fee2e2;
+  color: #b91c1c;
+  border-radius: 9px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}

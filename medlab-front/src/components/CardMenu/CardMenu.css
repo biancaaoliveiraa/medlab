@@ -1,0 +1,57 @@
+.card-menu {
+  width: 320px;
+  height: 120px;
+
+  background: #ffffff;
+  border-radius: 18px;
+
+  padding: 20px;
+
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+  transition: 0.2s;
+}
+
+.card-menu:hover {
+  transform: translateY(-4px);
+}
+
+.card-menu-icon {
+  width: 64px;
+  height: 64px;
+
+  border-radius: 16px;
+
+  background: #2ec4c3;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  font-size: 28px;
+}
+
+.card-menu-info h3 {
+  font-size: 18px;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.card-menu-info p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .card-menu {
+    width: 100%;
+    max-width: 320px;
+  }
+}

@@ -1,6 +1,18 @@
 import { useState, useRef } from 'react'
 import { UserCheck, Activity, HeartPulse, User, BriefcaseMedical, Menu, ArrowLeft, ChevronRight, Calendar, ClipboardList, Search, LogOut, ShieldAlert, Droplet, TestTube, Stethoscope, Beaker, Sparkles, Heart, Home, Bell, Bone, Clock, Plus, X } from 'lucide-react'
 import './App.css'
+import LoginAdministrador from "./pages/LoginAdministrador/LoginAdministrador";
+import PainelAdministrador from "./pages/PainelAdministrador/PainelAdministrador";
+import UsuariosLista from "./pages/Usuarios/UsuariosLista";
+import UsuarioEditar from "./pages/Usuarios/UsuarioEditar";
+import MedicosLista from "./pages/Medicos/MedicosLista";
+import MedicoCadastro from "./pages/Medicos/MedicoCadastro";
+import MedicoEditar from "./pages/Medicos/MedicoEditar";
+import ConveniosLista from "./pages/Convenios/ConveniosLista";
+import ConvenioCadastro from "./pages/Convenios/ConvenioCadastro";
+import ConvenioEditar from "./pages/Convenios/ConvenioEditar";
+import Relatorios from "./pages/Relatorios/Relatorios"; 
+
 
 function App() {
     const [currentScreen, setCurrentScreen] = useState('landing');
@@ -14,6 +26,7 @@ function App() {
     const [isExameFocused, setIsExameFocused] = useState(false);
     const [searchConsulta, setSearchConsulta] = useState('');
     const [searchFilter, setSearchFilter] = useState('');
+    const [adminItemId, setAdminItemId] = useState(null);
 
     const [agendamentos, setAgendamentos] = useState([
         { id: 1, tipo: 'Consulta', especialidade: 'Cardiologista', data: '10/05/2026', hora: '14:30', status: 'Pendente' },
@@ -675,7 +688,79 @@ function App() {
             </div>
         )
     }
+if (currentScreen === "login-administrador") {
+  return <LoginAdministrador setCurrentScreen={setCurrentScreen} />;
+}
 
+if (currentScreen === "painel-administrador") {
+  return <PainelAdministrador setCurrentScreen={setCurrentScreen} />;
+}
+
+if (currentScreen === "usuarios") {
+  return (
+    <UsuariosLista
+      setCurrentScreen={setCurrentScreen}
+      setAdminItemId={setAdminItemId}
+    />
+  );
+}
+
+if (currentScreen === "usuarios-editar") {
+  return (
+    <UsuarioEditar
+      setCurrentScreen={setCurrentScreen}
+      adminItemId={adminItemId}
+    />
+  );
+}
+
+if (currentScreen === "medicos") {
+  return (
+    <MedicosLista
+      setCurrentScreen={setCurrentScreen}
+      setAdminItemId={setAdminItemId}
+    />
+  );
+}
+
+if (currentScreen === "medicos-cadastro") {
+  return <MedicoCadastro setCurrentScreen={setCurrentScreen} />;
+}
+
+if (currentScreen === "medicos-editar") {
+  return (
+    <MedicoEditar
+      setCurrentScreen={setCurrentScreen}
+      adminItemId={adminItemId}
+    />
+  );
+}
+
+if (currentScreen === "convenios") {
+  return (
+    <ConveniosLista
+      setCurrentScreen={setCurrentScreen}
+      setAdminItemId={setAdminItemId}
+    />
+  );
+}
+
+if (currentScreen === "convenios-cadastro") {
+  return <ConvenioCadastro setCurrentScreen={setCurrentScreen} />;
+}
+
+if (currentScreen === "convenios-editar") {
+  return (
+    <ConvenioEditar
+      setCurrentScreen={setCurrentScreen}
+      adminItemId={adminItemId}
+    />
+  );
+}
+
+if (currentScreen === "relatorios") {
+  return <Relatorios setCurrentScreen={setCurrentScreen} />;
+}
     if (currentScreen === 'login-paciente') {
         return (
             <div className="login-screen-clean-container">
@@ -2683,9 +2768,14 @@ function App() {
                             <a href="#trabalhe-conosco" className="menu-panel-item" style={menuLinkStyle}>
                                 <span>Trabalhe Conosco</span><ChevronRight size={16} opacity={0.6} />
                             </a>
-                            <a href="#área-administrativa" className="menu-panel-item" style={menuLinkStyle}>
-                                <span>Área Administrativa</span><ChevronRight size={16} opacity={0.6} />
-                            </a>
+                            <button
+    className="menu-panel-item"
+    style={menuLinkStyle}
+    onClick={() => setCurrentScreen('login-administrador')}
+>
+    <span>Área Administrativa</span>
+    <ChevronRight size={16} opacity={0.6} />
+</button>
                         </div>
                     </div>
                 </div>

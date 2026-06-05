@@ -1,0 +1,22 @@
+.layout-admin {
+  min-height: 100vh;
+  background: #dff4fa;
+}
+
+.conteudo-admin {
+  padding-bottom: 60px;
+}
+
+.conteudo-admin main {
+  padding: 24px;
+}
+
+@media (max-width: 768px) {
+  .conteudo-admin {
+    padding-bottom: 58px;
+  }
+
+  .conteudo-admin main {
+    padding: 18px;
+  }
+}
