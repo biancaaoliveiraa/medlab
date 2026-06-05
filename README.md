@@ -1,86 +1,195 @@
-MedLab
+#  MedLab
 
-Sistema web para gerenciamento de clínicas médicas desenvolvido como projeto acadêmico, com o objetivo de centralizar processos administrativos, gerenciamento de pacientes, médicos, convênios e agendamentos em uma única plataforma.
+Sistema Web para Gestão de Clínicas Médicas
 
-Sobre o Projeto
+---
 
-O MedLab foi desenvolvido para atender às necessidades de gestão de uma clínica médica, oferecendo funcionalidades voltadas para diferentes perfis de usuários, incluindo pacientes, médicos e administradores.
+##  Sobre o Projeto
 
-O sistema foi construído utilizando uma arquitetura cliente-servidor, composta por uma aplicação Front-end desenvolvida em React e uma API REST desenvolvida com Spring Boot, utilizando PostgreSQL como banco de dados.
+O **MedLab** é um sistema web desenvolvido para auxiliar no gerenciamento administrativo e operacional de clínicas médicas, centralizando informações de pacientes, médicos, convênios, agendamentos e relatórios em uma única plataforma.
 
-Funcionalidades
-Área do Paciente
-Cadastro de pacientes
-Login no sistema
-Atualização de dados pessoais
-Gerenciamento de endereço
-Visualização de informações cadastrais
-Preenchimento e consulta de anamnese
-Agendamento de consultas
-Visualização de agendamentos realizados
-Área Médica
-Login de médicos
-Acesso às informações profissionais cadastradas
-Consulta de agenda e atendimentos vinculados ao profissional
-Visualização dos pacientes agendados
+O sistema foi desenvolvido utilizando arquitetura cliente-servidor, com Front-end em React, API REST em Spring Boot e banco de dados PostgreSQL.
+
+---
+
+##  Objetivos do Sistema
+
+* Centralizar informações da clínica.
+* Facilitar o gerenciamento de pacientes e profissionais.
+* Automatizar processos administrativos.
+* Organizar agendamentos e atendimentos.
+* Disponibilizar indicadores e relatórios gerenciais.
+* Aplicar conceitos de desenvolvimento Full Stack em ambiente acadêmico.
+
+---
+
+##  Perfis de Usuário
+
+### Paciente
+
+O paciente possui acesso às funcionalidades relacionadas ao seu atendimento:
+
+* Cadastro no sistema;
+* Login;
+* Atualização de dados pessoais;
+* Gerenciamento de endereço;
+* Preenchimento de anamnese;
+* Agendamento de consultas;
+* Consulta dos próprios agendamentos.
+
+---
+
+### Médico
 
 Os médicos são cadastrados exclusivamente pelo administrador do sistema.
 
-Área Administrativa
-Dashboard gerencial
-Cadastro, edição e exclusão de médicos
-Cadastro, edição e exclusão de pacientes
-Cadastro, edição e exclusão de convênios
-Controle de status de médicos e convênios
-Emissão e consulta de relatórios administrativos
-Gerenciamento geral das informações da clínica
-Arquitetura do Sistema
-Frontend (React + Vite)
-        │
-        ▼
-API REST (Spring Boot)
-        │
-        ▼
-Banco de Dados PostgreSQL
-Tecnologias Utilizadas
-Front-end
-React
-Vite
-JavaScript (ES6+)
-Axios
-React Router DOM
-React Icons
-CSS3
-Back-end
-Java 17
-Spring Boot 3
-Spring Data JPA
-Hibernate
-Maven
-Banco de Dados
-PostgreSQL
-Estrutura do Projeto
+Funcionalidades disponíveis:
+
+* Login no sistema;
+* Consulta da agenda de atendimentos;
+* Visualização de pacientes agendados;
+* Acompanhamento de consultas vinculadas ao profissional.
+
+---
+
+### Administrador
+
+Responsável pelo gerenciamento completo da clínica.
+
+#### Gestão de Pacientes
+
+* Cadastro;
+* Edição;
+* Exclusão;
+* Controle de status.
+
+#### Gestão de Médicos
+
+* Cadastro;
+* Edição;
+* Exclusão;
+* Controle de status;
+* Definição de credenciais de acesso.
+
+#### Gestão de Convênios
+
+* Cadastro;
+* Edição;
+* Exclusão;
+* Controle de status.
+
+#### Relatórios
+
+* Visualização de indicadores;
+* Consulta de relatórios administrativos.
+
+#### Dashboard
+
+* Resumo geral das informações da clínica.
+
+---
+
+## Arquitetura do Sistema
+
+```text
+┌─────────────────────┐
+│      Front-end      │
+│   React + Vite      │
+└──────────┬──────────┘
+           │
+           │ HTTP / JSON
+           ▼
+┌─────────────────────┐
+│      Back-end       │
+│ Spring Boot API     │
+└──────────┬──────────┘
+           │
+           │ JPA / Hibernate
+           ▼
+┌─────────────────────┐
+│     PostgreSQL      │
+│   Banco de Dados    │
+└─────────────────────┘
+```
+
+---
+
+##  Tecnologias Utilizadas
+
+### Front-end
+
+* React
+* Vite
+* React Router DOM
+* Axios
+* React Icons
+* CSS3
+
+### Back-end
+
+* Java 17
+* Spring Boot 3
+* Spring Data JPA
+* Hibernate
+* Maven
+
+### Banco de Dados
+
+* PostgreSQL
+
+### Controle de Versão
+
+* Git
+* GitHub
+
+---
+
+##  Estrutura do Projeto
+
+```text
 medlab-integrado
 │
 ├── medlab-front
-│   ├── src
 │   ├── public
+│   ├── src
+│   │   ├── assets
+│   │   ├── components
+│   │   ├── pages
+│   │   ├── services
+│   │   └── App.jsx
+│   │
 │   └── package.json
 │
 ├── medlab
 │   ├── src
-│   ├── pom.xml
-│   └── resources
+│   │   └── main
+│   │       ├── java
+│   │       │   └── com.medlab.api
+│   │       │       ├── controller
+│   │       │       ├── model
+│   │       │       └── repository
+│   │       │
+│   │       └── resources
+│   │           └── application.properties
+│   │
+│   └── pom.xml
 │
 └── README.md
-Configuração do Banco de Dados
+```
 
-Criar um banco de dados PostgreSQL:
+---
 
+## 🗄 Banco de Dados
+
+Criação do banco:
+
+```sql
 CREATE DATABASE medlab;
+```
 
-Exemplo de configuração:
+Configuração da aplicação:
 
+```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/medlab
 spring.datasource.username=SEU_USUARIO
 spring.datasource.password=SUA_SENHA
@@ -88,49 +197,87 @@ spring.datasource.password=SUA_SENHA
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-Executando o Back-end
+```
+
+---
+
+##  Executando o Back-end
 
 Acesse a pasta da API:
 
+```bash
 cd medlab
+```
 
 Execute a aplicação:
 
+```bash
 mvn spring-boot:run
+```
 
 Servidor padrão:
 
+```text
 http://localhost:8080
-Executando o Front-end
+```
+
+---
+
+##  Executando o Front-end
 
 Acesse a pasta do Front-end:
 
+```bash
 cd medlab-front
+```
 
 Instale as dependências:
 
+```bash
 npm install
+```
 
-Execute o projeto:
+Execute a aplicação:
 
+```bash
 npm run dev
+```
 
 Servidor padrão:
 
+```text
 http://localhost:5173
-Equipe de Desenvolvimento
+```
 
-Projeto desenvolvido como requisito acadêmico para a disciplina de desenvolvimento de sistemas da Universidade Católica do Salvador (UCSAL).
+---
 
-Objetivos Acadêmicos
-Aplicação prática dos conceitos de Engenharia de Software.
-Desenvolvimento de aplicações Web Full Stack.
-Integração entre Front-end, Back-end e Banco de Dados.
-Utilização de APIs REST.
-Aplicação de conceitos de persistência de dados com JPA/Hibernate.
-Trabalho colaborativo utilizando Git e GitHub.
-Licença
+##  Conceitos Aplicados
+
+* Programação Orientada a Objetos (POO)
+* Desenvolvimento Full Stack
+* Arquitetura Cliente-Servidor
+* APIs REST
+* Persistência de Dados
+* Spring Data JPA
+* Integração Front-end e Back-end
+* Controle de Versão com Git e GitHub
+
+---
+
+##  Projeto Acadêmico
+
+Projeto desenvolvido como requisito acadêmico do curso de **Análise e Desenvolvimento de Sistemas**, aplicando conceitos de desenvolvimento web, banco de dados, engenharia de software e integração entre sistemas.
+
+---
+
+##  Equipe de Desenvolvimento
+
+* Bianca Oliveira
+* Jefferson Luiz
+* Integrantes da Equipe MedLab
+
+---
+
+##  Licença
 
 Projeto desenvolvido exclusivamente para fins acadêmicos e educacionais.
-
-Esse formato passa muito mais credibilidade para professor e banca avaliadora do que um README simples.
