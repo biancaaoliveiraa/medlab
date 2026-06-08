@@ -59,6 +59,7 @@ export default function Atendimentos() {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full items-start">
           
+          {/* Calendário Lateral */}
           <div className="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm space-y-4">
             <div className="flex justify-between items-center border-b border-slate-100 pb-3">
               <div>
@@ -142,6 +143,7 @@ export default function Atendimentos() {
             </div>
           </div>
 
+          {/* Listagem de Agendados */}
           <div className="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm space-y-5">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
@@ -152,15 +154,19 @@ export default function Atendimentos() {
                 <p className="text-[11px] text-slate-400 font-medium">Cruzamento de horários e busca nominal</p>
               </div>
               
-              <div className="relative w-full sm:w-64">
+              <div className="relative w-full sm:w-64 flex items-center">
+                <span className="absolute left-3 text-slate-400">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </span>
                 <input
                   type="text"
                   placeholder="Buscar paciente..."
                   value={buscaPaciente}
                   onChange={(e) => setBuscaPaciente(e.target.value)}
-                  className="w-full bg-slate-50 text-xs px-3.5 py-2 pl-8 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:border-[#00d2c4] focus:bg-white font-medium transition"
+                  className="w-full bg-slate-50 text-xs px-3.5 py-2 pl-9 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:border-[#00d2c4] focus:bg-white font-medium transition"
                 />
-                <span className="absolute left-2.5 top-2.5 text-slate-400 text-[11px]">🔍</span>
               </div>
             </div>
             
@@ -181,14 +187,18 @@ export default function Atendimentos() {
                     {pacientesFiltrados.map((paciente, idx) => (
                       <tr key={idx} className="hover:bg-[#00d2c4]/5 transition group">
                         <td className="p-4 font-black text-[#0e2229] bg-[#00d2c4]/10 text-sm tracking-wide">{paciente.hora}</td>
-                        <td className="p-4 font-bold text-slate-900 text-sm group-hover:text-[#0e2229] transition">{paciente.nome}</td>
+                        <td className="p-4 font-bold text-slate-900 text-sm group-hover:text-[#00d2c4] transition">{paciente.nome}</td>
                         <td className="p-4 font-mono text-slate-500 font-semibold">{paciente.cpf}</td>
                         <td className="p-4 text-slate-500 font-medium">{paciente.tipo}</td>
                         <td className="p-4 text-slate-700 font-semibold">{paciente.exame}</td>
                         <td className="p-2 text-center">
-                          <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-block w-24 shadow-sm ${
-                            paciente.status === 'Finalizado' ? 'bg-[#0e2229] text-[#00d2c4]' :
-                            paciente.status === 'Agendado' ? 'bg-[#00d2c4] text-white' : 'bg-slate-200 text-slate-600'
+                          <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider inline-block w-24 text-center shadow-sm ${
+                            // Modificado: Agora 'Finalizado' tem fundo verde-água corporativo e letra branca
+                            paciente.status === 'Finalizado' ? 'bg-[#00d2c4] text-white' :
+                            // 'Agendado' ganhou um estilo outline limpo e sutil para se diferenciar
+                            paciente.status === 'Agendado' ? 'bg-white text-[#00d2c4] border border-[#00d2c4]' : 
+                            // 'Em Espera' continua no tom neutro e harmônico de sala de espera
+                            'bg-[#f1f5f9] text-[#64748b]'
                           }`}>
                             {paciente.status}
                           </span>
@@ -198,9 +208,11 @@ export default function Atendimentos() {
                   </tbody>
                 </table>
               ) : (
-                <div className="text-center py-16 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
-                  <span className="text-3xl block mb-2 opacity-40">📅</span>
-                  <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Sem atendimentos</p>
+                <div className="text-center py-16 bg-slate-50/50 rounded-xl border border-dashed border-slate-200 flex flex-col items-center justify-center">
+                  <svg className="w-10 h-10 text-slate-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Sem atendimentos para este período</p>
                 </div>
               )}
             </div>

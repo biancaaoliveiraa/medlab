@@ -11,12 +11,14 @@ import MedicoEditar from "./pages/Medicos/MedicoEditar";
 import ConveniosLista from "./pages/Convenios/ConveniosLista";
 import ConvenioCadastro from "./pages/Convenios/ConvenioCadastro";
 import ConvenioEditar from "./pages/Convenios/ConvenioEditar";
-import Relatorios from "./pages/Relatorios/Relatorios"; 
+import Relatorios from "./pages/Relatorios/Relatorios";
+import PainelMedico from "./pages/PainelMedico/PainelMedico";
 
 
 function App() {
     const [currentScreen, setCurrentScreen] = useState('landing');
     const [usuarioLogado, setUsuarioLogado] = useState(null);
+    const [medicoLogado, setMedicoLogado] = useState(null);
     const [cadastroStep, setCadastroStep] = useState(1);
     const [mostrarNotificacoes, setMostrarNotificacoes] = useState(false);
     const [atendimentosTab, setAtendimentosTab] = useState('proximos');
@@ -801,7 +803,48 @@ if (currentScreen === "relatorios") {
         )
     }
 
+    if (currentScreen === 'painel-medico') {
+        return (
+            <PainelMedico
+                medicoLogado={medicoLogado}
+                setCurrentScreen={setCurrentScreen}
+            />
+        );
+    }
+
     if (currentScreen === 'login-medico') {
+        const handleLoginMedico = async (e) => {
+            e.preventDefault();
+            const identificador = e.target.identificador.value;
+            const senha = e.target.senha.value;
+            try {
+                const res = await fetch('http://localhost:8080/api/medicos/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: identificador, crm: identificador, senha })
+                });
+                if (res.ok) {
+                    const medico = await res.json();
+                    setMedicoLogado(medico);
+                    setCurrentScreen('painel-medico');
+                } else {
+                    const msg = await res.text();
+                    alert(msg || 'Credenciais inválidas.');
+                }
+            } catch (err) {
+                // Banco offline: entra com dados de demonstração
+                setMedicoLogado({
+                    id: 1,
+                    nome: identificador || 'Dr. Demo',
+                    crm: '123456',
+                    uf: 'BA',
+                    especialidade: 'Cardiologia',
+                    email: identificador
+                });
+                setCurrentScreen('painel-medico');
+            }
+        };
+
         return (
             <div className="login-screen-clean-container">
                 <button onClick={() => setCurrentScreen('landing')} className="btn-voltar-topo-esquerdo">
@@ -812,14 +855,14 @@ if (currentScreen === "relatorios") {
                         <img src="/logo-medlab.png" alt="MedLab Logo" className="login-logo-circle-img" />
                     </div>
                     <h2>Login do Médico</h2>
-                    <form className="login-form-clean" onSubmit={(e) => e.preventDefault()}>
+                    <form className="login-form-clean" onSubmit={handleLoginMedico}>
                         <div className="input-field-group-clean">
                             <label>CRM / E-mail:</label>
-                            <input type="text" placeholder="Digite seu CRM ou e-mail" required style={inputStyleWithShadow} />
+                            <input name="identificador" type="text" placeholder="Digite seu CRM ou e-mail" required style={inputStyleWithShadow} />
                         </div>
                         <div className="input-field-group-clean">
                             <label>Senha:</label>
-                            <input type="password" placeholder="Digite sua senha" required style={inputStyleWithShadow} />
+                            <input name="senha" type="password" placeholder="Digite sua senha" required style={inputStyleWithShadow} />
                         </div>
                         <div className="form-options-clean">
                             <label className="medlab-custom-checkbox-container">
@@ -833,7 +876,7 @@ if (currentScreen === "relatorios") {
                     </form>
                 </div>
             </div>
-        )
+        );
     }
 
     if (currentScreen === 'atendimentos') {

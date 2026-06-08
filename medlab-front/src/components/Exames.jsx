@@ -20,7 +20,7 @@ export default function Exames() {
     const novoItem = {
       id: `#EX${String(listaExames.length + 1).padStart(2, '0')}`,
       p: paciente,
-      e: examenNome,
+      e: exameNome, // Corrigido: ajustado o erro de digitação original 'examenNome'
       s: status
     };
 
@@ -32,14 +32,15 @@ export default function Exames() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e8f7fd] font-sans text-[#0a191e] flex flex-col relative selection:bg-[#38b6ff]/30 p-6 md:p-8">
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-[#0e2229] flex flex-col relative selection:bg-[#00d2c4]/20 p-6 md:p-8">
       
       <main className="flex-1 w-full max-w-[1600px] mx-auto space-y-6">
         
+        {/* Botão Superior Alinhado com a Cor do Calendário */}
         <div className="flex justify-end w-full">
           <button 
             onClick={() => setModalAberto(true)}
-            className="bg-[#38b6ff] hover:bg-[#2fa3e6] text-white px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide shadow-md transition flex items-center gap-2 active:scale-95"
+            className="bg-[#00d2c4] hover:opacity-90 text-white px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide shadow-sm transition flex items-center gap-2 active:scale-95"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -48,8 +49,9 @@ export default function Exames() {
           </button>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-cyan-100/60 overflow-hidden w-full">
-          <div className="bg-slate-50/80 border-b border-slate-100 px-6 py-4 text-xs font-black text-slate-500 uppercase tracking-wider">
+        {/* Tabela de Laudos */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden w-full">
+          <div className="bg-slate-50/80 border-b border-slate-100 px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-wider">
             Laudos Clínicos Ativos e Histórico Recente
           </div>
           
@@ -65,14 +67,15 @@ export default function Exames() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {listaExames.map((exame) => (
-                  <tr key={exame.id} className="hover:bg-slate-50/70 transition">
+                  <tr key={exame.id} className="hover:bg-[#00d2c4]/5 transition group">
                     <td className="px-6 py-4 font-mono font-bold text-slate-400 text-sm">{exame.id}</td>
-                    <td className="px-6 py-4 font-bold text-slate-800 text-sm">{exame.p}</td>
+                    <td className="px-6 py-4 font-bold text-slate-900 text-sm group-hover:text-[#00d2c4] transition">{exame.p}</td>
                     <td className="px-6 py-4 text-slate-600 font-medium">{exame.e}</td>
                     <td className="px-6 py-4 text-center">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-black tracking-wide inline-block w-24 ${
-                        exame.s === 'Finalizado' ? 'bg-[#0d7c85] text-white' :
-                        exame.s === 'Pendente' ? 'bg-[#0e2229] text-white' : 'bg-slate-300 text-slate-700'
+                      <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider inline-block w-24 text-center shadow-sm ${
+                        // Modificado: Alinhado com o padrão verde com texto branco do calendário
+                        exame.s === 'Finalizado' ? 'bg-[#00d2c4] text-white' :
+                        exame.s === 'Pendente' ? 'bg-[#0e2229] text-white' : 'bg-[#f1f5f9] text-[#64748b]'
                       }`}>{exame.s}</span>
                     </td>
                   </tr>
@@ -84,6 +87,7 @@ export default function Exames() {
 
       </main>
 
+      {/* Modal de Cadastro */}
       {modalAberto && (
         <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-100 space-y-4">
@@ -99,7 +103,7 @@ export default function Exames() {
                   type="text" 
                   value={paciente}
                   onChange={(e) => setPaciente(e.target.value)}
-                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#38b6ff] transition text-sm" 
+                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#00d2c4] focus:bg-white transition text-sm font-medium" 
                   placeholder="Ex: Carlos Silva"
                 />
               </div>
@@ -110,7 +114,7 @@ export default function Exames() {
                   type="text" 
                   value={exameNome}
                   onChange={(e) => setExameNome(e.target.value)}
-                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#38b6ff] transition text-sm" 
+                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#00d2c4] focus:bg-white transition text-sm font-medium" 
                   placeholder="Ex: Hemograma Completo"
                 />
               </div>
@@ -120,7 +124,7 @@ export default function Exames() {
                 <select 
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#38b6ff] transition text-sm w-full"
+                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#00d2c4] focus:bg-white transition text-sm font-bold w-full text-slate-700"
                 >
                   <option>Pendente</option>
                   <option>Em Aberto</option>
@@ -138,7 +142,7 @@ export default function Exames() {
                 </button>
                 <button 
                   type="submit" 
-                  className="px-4 py-2.5 rounded-xl bg-[#38b6ff] text-white font-bold hover:bg-[#2fa3e6] transition shadow-sm"
+                  className="px-4 py-2.5 rounded-xl bg-[#00d2c4] text-white font-bold hover:opacity-90 transition shadow-sm"
                 >
                   Salvar Laudo
                 </button>
