@@ -1,207 +1,212 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar, Search } from 'lucide-react';
 
 export default function Atendimentos() {
-  // Estado para armazenar o dia atualmente visualizado
-  const [dataSelecionada, setDataSelecionada] = useState("2026-03-26");
-  const [buscaPaciente, setBuscaPaciente] = useState("");
+  const dadosAgendamentos = [
+    { hora: "08:00", nome: "João Silva", cpf: "048.239.122-85", tipo: "Consulta de Rotina", exame: "Colesterol Total", status: "Finalizado", dia: 7, mes: 5 }, 
+    { hora: "09:15", nome: "Maria Gomes", cpf: "702.411.903-44", tipo: "Consulta de Retorno", exame: "Hemograma Completo", status: "Em Espera", dia: 7, mes: 5 },
+    { hora: "10:30", nome: "Pedro Santos", cpf: "122.904.382-10", tipo: "Consulta de Rotina", exame: "Eletrocardiograma", status: "Em Espera", dia: 7, mes: 5 },
+    { hora: "14:00", nome: "Lucas Oliveira", cpf: "334.102.887-55", tipo: "Avaliação Particular", exame: "Glicemia em Jejum", status: "Agendado", dia: 8, mes: 5 },
+    { hora: "08:30", nome: "Ana Beatriz", cpf: "445.211.398-00", tipo: "Consulta de Rotina", exame: "Ultrassonografia", status: "Agendado", dia: 12, mes: 5 },
+    { hora: "11:00", nome: "Carlos Henrique", cpf: "998.102.344-11", tipo: "Consulta de Retorno", exame: "Ecocardiograma", status: "Finalizado", dia: 15, mes: 6 } 
+  ];
 
-  // Banco de dados simulado para múltiplos dias
-  const agendaPorData = {
-    "2026-03-25": [ // Ontem
-      { hora: "08:00", nome: "Marcos Vinícius", tipo: "Consulta", status: "Atendido" },
-      { hora: "09:30", nome: "Sandra Helena Ramos", tipo: "Exame: Ecocardiograma", status: "Atendido" },
-      { hora: "11:00", nome: "Carlos Eduardo Silva", tipo: "Consulta", status: "Faltou" }
-    ],
-    "2026-03-26": [ // Data base do print original
-      { hora: "07:00", nome: "Ana Paula Guimarães", tipo: "Consulta", status: "Agendado" },
-      { hora: "08:00", nome: "José Bezerra", tipo: "Exame: Teste ergométrico", status: "Agendado" },
-      { hora: "09:00", nome: "Luna Teixeira", tipo: "Exame: Eletrocardiograma", status: "Agendado" },
-      { hora: "10:00", nome: "Luciano Moraes", tipo: "Consulta", status: "Agendado" },
-      { hora: "11:00", nome: "Rodrigo Martinelli", tipo: "Exame: Eletrocardiograma", status: "Agendado" },
-      { hora: "12:00", nome: "Carol Barbosa", tipo: "Exame: Holter 24h", status: "Agendado" }
-    ],
-    "2026-03-27": [ // Amanhã
-      { hora: "07:30", nome: "Beatriz Albuquerque", tipo: "Consulta", status: "Agendado" },
-      { hora: "09:00", nome: "Mariana Costa", tipo: "Exame: MAPA 24h", status: "Agendado" },
-      { hora: "10:30", nome: "Roberto de Souza", tipo: "Consulta", status: "Agendado" }
-    ],
-    "2026-03-28": [ // Futuro
-      { hora: "08:00", nome: "Geraldo Alckmin Neto", tipo: "Exame: Teste ergométrico", status: "Agendado" },
-      { hora: "10:00", nome: "Fernanda Montenegro Ramos", tipo: "Consulta", status: "Agendado" }
-    ]
+  const meses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+  ];
+
+  const [mesIndex, setMesIndex] = useState(5); 
+  const [ano, setAno] = useState(2026);
+  const [diaSelecionado, setDiaSelecionado] = useState(7); 
+  const [buscaPaciente, setBuscaPaciente] = useState('');
+  const [modoFiltro, setModoFiltro] = useState('dia');
+
+  const mesAnterior = () => {
+    if (mesIndex === 0) {
+      setMesIndex(11);
+      setAno(ano - 1);
+    } else {
+      setMesIndex(mesIndex - 1);
+    }
   };
 
-  // Funções de navegação de data
-  const alterarDia = (diasParaMudar) => {
-    const dataAtual = new Date(dataSelecionada + "T00:00:00");
-    dataAtual.setDate(dataAtual.getDate() + diasParaMudar);
-    
-    const ano = dataAtual.getFullYear();
-    const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
-    const dia = String(dataAtual.getDate()).padStart(2, '0');
-    
-    setDataSelecionada(`${ano}-${mes}-${dia}`);
+  const proximoMes = () => {
+    if (mesIndex === 11) {
+      setMesIndex(0);
+      setAno(ano + 1);
+    } else {
+      setMesIndex(mesIndex + 1);
+    }
   };
 
-  // Formata a data em string legível brasileira
-  const obterDataFormatada = () => {
-    if (dataSelecionada === "2026-03-25") return "Ontem, 25/03";
-    if (dataSelecionada === "2026-03-26") return "Hoje, 26/03";
-    if (dataSelecionada === "2026-03-27") return "Amanhã, 27/03";
+  const totalDias = 30;
+  const diasGrade = Array.from({ length: totalDias }, (_, i) => i + 1);
 
-    const partes = dataSelecionada.split("-");
-    return `Dia ${partes[2]}/${partes[1]}`;
-  };
-
-  const listaDoDia = agendaPorData[dataSelecionada] || [];
-
-  const listaFiltrada = listaDoDia.filter(p => 
-    p.nome.toLowerCase().includes(buscaPaciente.toLowerCase())
-  );
+  const pacientesFiltrados = dadosAgendamentos.filter(paciente => {
+    const matchesBusca = paciente.nome.toLowerCase().includes(buscaPaciente.toLowerCase());
+    const mesmoMes = paciente.mes === mesIndex;
+    if (!matchesBusca || !mesmoMes) return false;
+    if (modoFiltro === 'dia') return paciente.dia === diaSelecionado;
+    if (modoFiltro === 'semana') return paciente.dia >= diaSelecionado && paciente.dia <= (diaSelecionado + 6);
+    if (modoFiltro === 'mes') return true;
+    return false;
+  });
 
   return (
-    <div className="w-full flex flex-col gap-6 animate-fadeIn pb-12">
+    <div className="min-h-screen bg-[#f8fafc] font-sans text-[#0e2229] flex flex-col selection:bg-[#00d2c4]/20 w-full p-6">
       
-      {/* Bloco de Controle de Calendário Avançado */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-white flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-800">Controle de Atendimentos</h2>
-          <p className="text-sm text-gray-400 mt-1">Monitore e alterne entre as agendas diárias passadas, atuais e futuras.</p>
-        </div>
-
-        {/* Componente Seletor de Calendário Nativo */}
-        <div className="flex items-center gap-3 bg-[#e2f5ff] px-4 py-2.5 rounded-2xl border border-blue-100 self-start md:self-auto">
-          <Calendar size={18} className="text-[#1a535c]" />
-          <span className="text-xs font-bold text-[#1a535c] mr-1">Ir para data:</span>
-          <input 
-            type="date" 
-            value={dataSelecionada}
-            onChange={(e) => setDataSelecionada(e.target.value)}
-            className="bg-white border border-blue-200 rounded-xl px-2 py-1 text-xs font-bold text-gray-700 outline-none focus:border-blue-400 cursor-pointer"
-          />
-        </div>
-      </div>
-
-      {/* Barra Dinâmica de Navegação Temporal */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white px-6 py-4 rounded-3xl shadow-sm border border-white">
+      <main className="flex-1 w-full space-y-6">
         
-        {/* Botões Rápidos de Atalho */}
-        <div className="flex items-center gap-2 bg-gray-50 p-1.5 rounded-2xl w-full sm:w-auto">
-          <button 
-            onClick={() => setDataSelecionada("2026-03-25")}
-            className={`flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all ${dataSelecionada === '2026-03-25' ? 'bg-[#1a535c] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-          >
-            Ontem
-          </button>
-          <button 
-            onClick={() => setDataSelecionada("2026-03-26")}
-            className={`flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all ${dataSelecionada === '2026-03-26' ? 'bg-[#1a535c] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-          >
-            Hoje
-          </button>
-          <button 
-            onClick={() => setDataSelecionada("2026-03-27")}
-            className={`flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-bold transition-all ${dataSelecionada === '2026-03-27' ? 'bg-[#1a535c] text-white shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-          >
-            Amanhã
-          </button>
-        </div>
-
-        {/* Barra de Pesquisa por Nome */}
-        <div className="relative w-full sm:max-w-xs">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-          <input 
-            type="text"
-            placeholder="Procurar paciente no dia..."
-            value={buscaPaciente}
-            onChange={(e) => setBuscaPaciente(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs focus:outline-none focus:border-blue-200 text-gray-700"
-          />
-        </div>
-      </div>
-
-      {/* Card da Agenda Principal */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-white flex flex-col gap-5">
-        
-        {/* Cabeçalho da Lista */}
-        <div className="flex justify-between items-center border-b border-gray-50 pb-4">
-          <div className="flex items-center gap-3">
-            <h3 className="text-xl font-black text-gray-800 tracking-tight">
-              {obterDataFormatada()}
-            </h3>
-            <span className="bg-emerald-50 text-emerald-600 font-bold text-[11px] px-2.5 py-0.5 rounded-full">
-              {listaFiltrada.length} {listaFiltrada.length === 1 ? 'agendado' : 'agendados'}
-            </span>
-          </div>
-
-          {/* Setas sequenciais */}
-          <div className="flex items-center gap-1.5">
-            <button 
-              onClick={() => alterarDia(-1)}
-              className="p-2 border border-gray-100 rounded-xl bg-white text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
-              title="Voltar 1 Dia"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button 
-              onClick={() => alterarDia(1)}
-              className="p-2 border border-gray-100 rounded-xl bg-white text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
-              title="Avançar 1 Dia"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Lista Cronológica */}
-        <div className="flex flex-col gap-1 divide-y divide-gray-50/70">
-          {listaFiltrada.map((item, index) => (
-            <div key={index} className="flex items-center justify-between py-4 pl-1 pr-2 group hover:bg-gray-50/40 rounded-xl transition-all gap-3">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full items-start">
+          
+          <div className="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/60 shadow-sm space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+              <div>
+                <h3 className="font-bold text-xs text-slate-400 uppercase tracking-wider">Calendário Clínico</h3>
+                <p className="text-[11px] text-slate-400 font-medium">Filtro por data</p>
+              </div>
               
-              <div className="flex items-start gap-4">
-                {/* Linha de Horário */}
-                <span className="text-sm font-black text-gray-800 min-w-[45px] pt-0.5">
-                  {item.hora}
-                </span>
-                
-                {/* Divisor Visual Cinza Vertical */}
-                <div className="w-[2px] h-9 bg-gray-200 rounded-full shrink-0 group-hover:bg-[#4ea8de] transition-colors" />
-                
-                {/* Nome do Paciente e Detalhes */}
-                <div className="flex flex-col">
-                  <span className="font-bold text-gray-800 text-sm group-hover:text-blue-900 transition-colors">
-                    {item.nome}
-                  </span>
-                  <span className="text-xs text-gray-400 font-medium mt-0.5">
-                    {item.tipo}
-                  </span>
+              <div className="flex items-center gap-1.5 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                <button onClick={mesAnterior} className="w-6 h-6 flex items-center justify-center rounded hover:bg-white text-xs font-bold transition text-[#0e2229]">&lt;</button>
+                <span className="text-[11px] font-black text-[#0e2229] px-1 min-w-[75px] text-center">{meses[mesIndex]} {ano}</span>
+                <button onClick={proximoMes} className="w-6 h-6 flex items-center justify-center rounded hover:bg-white text-xs font-bold transition text-[#0e2229]">&gt;</button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-1.5 text-[10px] font-bold text-center select-none">
+              <button 
+                onClick={() => setModoFiltro('dia')}
+                className={`py-1.5 rounded-md transition duration-150 border ${
+                  modoFiltro === 'dia' 
+                    ? "bg-[#00d2c4] text-white border-[#00d2c4] shadow-sm font-black" 
+                    : "bg-slate-50 text-slate-500 border-slate-100 hover:bg-slate-100"
+                }`}
+              >
+                Hoje
+              </button>
+              <button 
+                onClick={() => setModoFiltro('semana')}
+                className={`py-1.5 rounded-md transition duration-150 border ${
+                  modoFiltro === 'semana' 
+                    ? "bg-[#00d2c4] text-white border-[#00d2c4] shadow-sm font-black" 
+                    : "bg-slate-50 text-slate-500 border-slate-100 hover:bg-slate-100"
+                }`}
+              >
+                Esta Semana
+              </button>
+              <button 
+                onClick={() => setModoFiltro('mes')}
+                className={`py-1.5 rounded-md transition duration-150 border ${
+                  modoFiltro === 'mes' 
+                    ? "bg-[#00d2c4] text-white border-[#00d2c4] shadow-sm font-black" 
+                    : "bg-slate-50 text-slate-500 border-slate-100 hover:bg-slate-100"
+                }`}
+              >
+                Visão Mensal
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              <div className="grid grid-cols-7 gap-1 text-center text-[9px] font-black uppercase text-slate-400 tracking-wider">
+                <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+              </div>
+              
+              <div className="grid grid-cols-7 gap-1 text-center text-xs font-semibold text-slate-700">
+                <span className="p-2 text-slate-300">31</span>
+                {diasGrade.map((dia) => {
+                  const isSelecionado = dia === diaSelecionado;
+                  return (
+                    <span
+                      key={dia}
+                      onClick={() => { setDiaSelecionado(dia); if (modoFiltro !== 'semana') setModoFiltro('dia'); }}
+                      className={`p-2 rounded-lg cursor-pointer transition select-none ${
+                        isSelecionado 
+                          ? "bg-[#00d2c4] text-white font-black shadow-sm" 
+                          : "hover:bg-[#00d2c4]/10"
+                      }`}
+                    >
+                      {dia < 10 ? `0${dia}` : dia}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="border-t border-slate-100 pt-3 flex items-center justify-between text-[10px] font-bold uppercase tracking-wider">
+              <span className="flex items-center gap-1.5 text-slate-400">
+                <span className="w-2 h-2 rounded-full bg-[#00d2c4]"></span> Agenda Ativa
+              </span>
+              <span className="text-[#0e2229] font-black bg-[#00d2c4]/10 px-2 py-0.5 rounded">
+                Data: {diaSelecionado < 10 ? `0${diaSelecionado}` : diaSelecionado}/{mesIndex + 1 < 10 ? `0${mesIndex + 1}` : mesIndex + 1}
+              </span>
+            </div>
+          </div>
+
+          <div className="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm space-y-5">
+            
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+              <div>
+                <h3 className="font-bold text-xs text-[#0e2229] uppercase tracking-wider">
+                  Agendados para o Período
+                </h3>
+                <p className="text-[11px] text-slate-400 font-medium">Cruzamento de horários e busca nominal</p>
+              </div>
+              
+              <div className="relative w-full sm:w-64">
+                <input
+                  type="text"
+                  placeholder="Buscar paciente..."
+                  value={buscaPaciente}
+                  onChange={(e) => setBuscaPaciente(e.target.value)}
+                  className="w-full bg-slate-50 text-xs px-3.5 py-2 pl-8 rounded-xl border border-slate-200 text-slate-800 focus:outline-none focus:border-[#00d2c4] focus:bg-white font-medium transition"
+                />
+                <span className="absolute left-2.5 top-2.5 text-slate-400 text-[11px]">🔍</span>
+              </div>
+            </div>
+            
+            <div className="overflow-x-auto w-full">
+              {pacientesFiltrados.length > 0 ? (
+                <table className="w-full text-xs text-left border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50 text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200">
+                      <th className="p-3.5 w-24">Horário</th>
+                      <th className="p-3.5">Nome do Paciente</th>
+                      <th className="p-3.5 w-44">CPF / Documento</th>
+                      <th className="p-3.5">Tipo</th>
+                      <th className="p-3.5">Procedimento</th>
+                      <th className="p-3.5 text-center w-32">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {pacientesFiltrados.map((paciente, idx) => (
+                      <tr key={idx} className="hover:bg-[#00d2c4]/5 transition group">
+                        <td className="p-4 font-black text-[#0e2229] bg-[#00d2c4]/10 text-sm tracking-wide">{paciente.hora}</td>
+                        <td className="p-4 font-bold text-slate-900 text-sm group-hover:text-[#0e2229] transition">{paciente.nome}</td>
+                        <td className="p-4 font-mono text-slate-500 font-semibold">{paciente.cpf}</td>
+                        <td className="p-4 text-slate-500 font-medium">{paciente.tipo}</td>
+                        <td className="p-4 text-slate-700 font-semibold">{paciente.exame}</td>
+                        <td className="p-2 text-center">
+                          <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider inline-block w-24 shadow-sm ${
+                            paciente.status === 'Finalizado' ? 'bg-[#0e2229] text-[#00d2c4]' :
+                            paciente.status === 'Agendado' ? 'bg-[#00d2c4] text-white' : 'bg-slate-200 text-slate-600'
+                          }`}>
+                            {paciente.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="text-center py-16 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
+                  <span className="text-3xl block mb-2 opacity-40">📅</span>
+                  <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Sem atendimentos</p>
                 </div>
-              </div>
-
-              {/* Apenas a Tag de Status */}
-              <div className="flex items-center justify-end">
-                <span className={`text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md ${
-                  item.status === 'Atendido' ? 'bg-emerald-50 text-emerald-600' :
-                  item.status === 'Faltou' ? 'bg-rose-50 text-rose-500' : 'bg-blue-50 text-[#4ea8de]'
-                }`}>
-                  {item.status}
-                </span>
-              </div>
-
+              )}
             </div>
-          ))}
-
-          {/* Estado de tela vazia */}
-          {listaFiltrada.length === 0 && (
-            <div className="text-center py-12 text-gray-400 italic bg-gray-50/20 rounded-2xl border border-dashed border-gray-100 my-2">
-              Nenhum compromisso médico agendado para esta data.
-            </div>
-          )}
+          </div>
         </div>
-
-      </div>
-
+      </main>
     </div>
   );
 }

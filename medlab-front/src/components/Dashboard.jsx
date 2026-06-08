@@ -1,135 +1,130 @@
 import React from 'react';
-import { User, Award, ShieldCheck, Clock, CheckCircle2, Calendar, FileText, AlertCircle } from 'lucide-react';
 
 export default function Dashboard() {
-  const medico = {
-    nome: "Dr. Carlos Antônio",
-    crm: "123456/SSA",
-    especialidade: "Cardiologia & Eletrofisiologia",
-    statusTurno: "Em plantão",
-    hospital: "Unidade Central MedLab"
-  };
-
   return (
-    <div className="w-full flex flex-col gap-8 animate-fadeIn pt-4 pb-12">
+    <div className="min-h-screen bg-[#e8f7fd] font-sans text-[#0a191e] flex flex-col selection:bg-[#38b6ff]/30 w-full p-6">
       
-      {/* SEÇÃO 1: Cartão de Identificação do Médico (Mais Espaçado) */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-white flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 transition-all hover:shadow-md/50">
+      {/* Conteúdo Principal da Clínica */}
+      <main className="flex-1 w-full space-y-6">
         
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-          {/* Avatar Clínico */}
-          <div className="w-16 h-16 rounded-2xl bg-[#e2f5ff] flex items-center justify-center text-[#1a535c] shrink-0 border border-blue-100 shadow-sm">
-            <User size={30} className="stroke-[1.8]" />
-          </div>
+        {/* Bloco Superior: Perfil Prático do Médico & Indicadores do Dia */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 w-full">
           
-          {/* Dados de Registro */}
-          <div className="space-y-1.5">
-            <div className="flex flex-wrap items-center gap-3">
-              <h2 className="text-2xl font-extrabold text-gray-800 tracking-tight">{medico.nome}</h2>
-              <span className="bg-emerald-50 text-emerald-600 text-[10px] font-black tracking-widest uppercase px-2.5 py-1 rounded-lg flex items-center gap-1.5 border border-emerald-100">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                {medico.statusTurno}
-              </span>
+          {/* Card de Identificação Médica */}
+          <div className="lg:col-span-5 bg-white p-5 rounded-2xl border border-cyan-100/60 shadow-sm flex flex-col justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#38b6ff]/10 flex items-center justify-center font-black text-sm text-[#208cd0] border border-[#38b6ff]/20 shrink-0">
+                DR
+              </div>
+              <div>
+                <h2 className="font-bold text-base text-slate-900">Dr. Carlos Antônio</h2>
+                <p className="text-xs font-bold text-[#0d7c85] mt-0.5">CRM 12345 / BA</p>
+                <p className="text-[11px] font-medium text-slate-400 mt-0.5">Cardiologia Clínica e Eletrofisiologia</p>
+              </div>
             </div>
             
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-gray-400">
-              <span className="flex items-center gap-2">
-                <Award size={16} className="text-[#4ea8de]" />
-                <span className="text-gray-600 font-medium">{medico.especialidade}</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-[#00bfa5]" />
-                <span>CRM: <strong className="text-gray-700 font-bold">{medico.crm}</strong></span>
+            <div className="border-t border-slate-100 pt-3 mt-4 flex items-center justify-between text-xs">
+              <span className="text-slate-400 font-semibold">Local de Atendimento:</span>
+              <span className="text-[#208cd0] bg-[#e8f7fd] px-2.5 py-0.5 rounded-lg font-black uppercase text-[10px] tracking-wider">
+                Sala 10
               </span>
             </div>
           </div>
+
+          {/* Resumo Numérico Rápido das Consultas */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            {/* Pacientes do Dia */}
+            <div className="bg-white p-5 rounded-2xl border border-cyan-100/60 shadow-sm flex flex-col justify-between">
+              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">Pacientes do Dia</span>
+              <div className="mt-2">
+                <h3 className="text-3xl font-black text-slate-900">04</h3>
+                <p className="text-[11px] text-slate-400 mt-0.5">Total agendado</p>
+              </div>
+            </div>
+
+            {/* Já Atendidos */}
+            <div className="bg-white p-5 rounded-2xl border border-cyan-100/60 shadow-sm flex flex-col justify-between">
+              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-500">Atendidos</span>
+              <div className="mt-2">
+                <h3 className="text-3xl font-black text-emerald-600">01</h3>
+                <p className="text-[11px] text-emerald-600/70 mt-0.5">Concluídos</p>
+              </div>
+            </div>
+
+            {/* Aguardando Chamada */}
+            <div className="bg-white p-5 rounded-2xl border border-cyan-100/60 shadow-sm flex flex-col justify-between">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-500">Aguardando</span>
+              <div className="mt-2">
+                <h3 className="text-3xl font-black text-amber-600">03</h3>
+                <p className="text-[11px] text-amber-600/70 mt-0.5">Na fila da clínica</p>
+              </div>
+            </div>
+
+          </div>
         </div>
 
-        {/* Local de Trabalho Lateral */}
-        <div className="flex items-center justify-between gap-5 bg-gray-50/70 p-5 rounded-2xl border border-gray-100 w-full lg:w-auto min-w-[280px]">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[9px] font-black tracking-widest text-gray-400 uppercase">Local de Trabalho</span>
-            <span className="text-xs font-bold text-gray-700">{medico.hospital}</span>
+        {/* Fila Ambulatorial de Pacientes */}
+        <div className="bg-white p-6 rounded-2xl border border-cyan-100/60 shadow-sm space-y-4 w-full">
+          <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+            <h3 className="font-bold text-xs text-slate-400 uppercase tracking-wider">Fila Geral de Atendimento do Dia</h3>
+            <span className="text-[11px] font-bold bg-[#38b6ff]/10 text-[#208cd0] px-2.5 py-0.5 rounded-md">Lista de Rotina</span>
           </div>
-          <div className="flex flex-col items-center shrink-0 bg-white border border-gray-200/80 rounded-xl px-3.5 py-2 shadow-sm">
-            <span className="text-[8px] font-black text-gray-400 tracking-wider">SALA</span>
-            <span className="text-xl font-black text-[#1a535c] leading-none mt-0.5">10</span>
-          </div>
-        </div>
-
-      </div>
-
-      {/* SEÇÃO 2: Grid de Métricas Unificado (Layout de 4 Colunas Fluido) */}
-      <div className="flex flex-col gap-3">
-        <span className="text-[11px] font-black text-gray-400 uppercase tracking-widest pl-1">
-          Resumo Operacional de Hoje
-        </span>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           
-          {/* Card 1: Atendidos */}
-          <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-white hover:shadow-md transition-all group">
-            <div className="w-12 h-12 shrink-0 rounded-xl bg-blue-50 text-[#4ea8de] flex items-center justify-center font-black text-base shadow-sm group-hover:scale-105 transition-transform">
-              <CheckCircle2 size={22} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black text-gray-800 leading-tight">7</span>
-              <span className="text-xs font-bold text-gray-700 mt-0.5">Atendidos</span>
-              <span className="text-[10px] text-gray-400 mt-0.5">Pacientes finalizados</span>
-            </div>
+          <div className="overflow-x-auto w-full">
+            <table className="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50 text-slate-400 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200">
+                  <th className="p-3.5">Nome do Paciente</th>
+                  <th className="p-3.5 w-44">CPF / Documento</th>
+                  <th className="p-3.5">Tipo de Atendimento</th>
+                  <th className="p-3.5">Exame / Procedimento</th>
+                  <th className="p-3.5 text-center w-36">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                <tr className="hover:bg-slate-50/50 transition">
+                  <td className="p-4 font-bold text-slate-900 text-sm">João Silva</td>
+                  <td className="p-4 font-mono text-slate-500 font-semibold tracking-wide">048.239.122-85</td>
+                  <td className="p-4 text-slate-600 font-medium">Consulta de Rotina</td>
+                  <td className="p-4 text-slate-700 font-semibold">Colesterol Total</td>
+                  <td className="p-2 text-center">
+                    <span className="bg-[#0d7c85] text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-wider inline-block w-24">Finalizado</span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-50/50 transition">
+                  <td className="p-4 font-bold text-slate-900 text-sm">Maria Gomes</td>
+                  <td className="p-4 font-mono text-slate-500 font-semibold tracking-wide">702.411.903-44</td>
+                  <td className="p-4 text-slate-600 font-medium">Consulta de Retorno</td>
+                  <td className="p-4 text-slate-700 font-semibold">Hemograma Completo</td>
+                  <td className="p-2 text-center">
+                    <span className="bg-[#0e2229] text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-wider inline-block w-24">Em Espera</span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-50/50 transition">
+                  <td className="p-4 font-bold text-slate-900 text-sm">Pedro Santos</td>
+                  <td className="p-4 font-mono text-slate-500 font-semibold tracking-wide">122.904.382-10</td>
+                  <td className="p-4 text-slate-600 font-medium">Consulta de Rotina</td>
+                  <td className="p-4 text-slate-700 font-semibold">Eletrocardiograma</td>
+                  <td className="p-2 text-center">
+                    <span className="bg-[#0e2229] text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-wider inline-block w-24">Em Espera</span>
+                  </td>
+                </tr>
+                <tr className="hover:bg-slate-50/50 transition">
+                  <td className="p-4 font-bold text-slate-900 text-sm">Lucas Oliveira</td>
+                  <td className="p-4 font-mono text-slate-500 font-semibold tracking-wide">334.102.887-55</td>
+                  <td className="p-4 text-slate-600 font-medium">Avaliação Particular</td>
+                  <td className="p-4 text-slate-700 font-semibold">Glicemia em Jejum</td>
+                  <td className="p-2 text-center">
+                    <span className="bg-slate-400 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-wider inline-block w-24">Agendado</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-          {/* Card 2: Agendados */}
-          <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-white hover:shadow-md transition-all group">
-            <div className="w-12 h-12 shrink-0 rounded-xl bg-teal-50 text-[#00bfa5] flex items-center justify-center font-black text-base shadow-sm group-hover:scale-105 transition-transform">
-              <Calendar size={22} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black text-gray-800 leading-tight">15</span>
-              <span className="text-xs font-bold text-gray-700 mt-0.5">Agendados</span>
-              <span className="text-[10px] text-gray-400 mt-0.5">Lista total do dia</span>
-            </div>
-          </div>
-
-          {/* Card 3: Laudados */}
-          <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-white hover:shadow-md transition-all group">
-            <div className="w-12 h-12 shrink-0 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center font-black text-base shadow-sm group-hover:scale-105 transition-transform">
-              <FileText size={22} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black text-gray-800 leading-tight">3</span>
-              <span className="text-xs font-bold text-gray-700 mt-0.5">Laudados</span>
-              <span className="text-[10px] text-gray-400 mt-0.5">Resultados assinados</span>
-            </div>
-          </div>
-
-          {/* Card 4: Pendentes */}
-          <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-white hover:shadow-md transition-all group">
-            <div className="w-12 h-12 shrink-0 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center font-black text-base shadow-sm group-hover:scale-105 transition-transform">
-              <AlertCircle size={22} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black text-gray-800 leading-tight">12</span>
-              <span className="text-xs font-bold text-gray-700 mt-0.5">Pendentes</span>
-              <span className="text-[10px] text-gray-400 mt-0.5">Aguardando revisão</span>
-            </div>
-          </div>
-
         </div>
-      </div>
 
-      {/* SEÇÃO 3: Informativo Sincronização Rodapé */}
-      <div className="bg-white/40 border border-white/60 rounded-2xl px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-400 mt-2">
-        <div className="flex items-center gap-2.5">
-          <Clock size={14} className="text-gray-400" />
-          <span>Última sincronização com a base de dados central: <strong className="text-gray-500 font-semibold">Agora mesmo</strong></span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
-          <span>Sessão médica ativa segura</span>
-        </div>
-      </div>
-
+      </main>
     </div>
   );
 }
