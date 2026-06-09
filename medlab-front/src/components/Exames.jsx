@@ -4,153 +4,216 @@ export default function Exames() {
   const [modalAberto, setModalAberto] = useState(false);
   const [listaExames, setListaExames] = useState([
     { id: "#EX01", p: "Ana Paula Guimarães", e: "Teste Ergométrico", s: "Finalizado" },
-    { id: "#EX02", p: "José Bezerra", e: "Hemograma", s: "Pendente" },
-    { id: "#EX03", p: "Luna Teixeira", e: "Eletrocardiograma", s: "Em Aberto" },
-    { id: "#EX04", p: "Luciano Moraes", e: "Colesterol", s: "Finalizado" }
+    { id: "#EX02", p: "José Bezerra",        e: "Hemograma",         s: "Pendente"   },
+    { id: "#EX03", p: "Luna Teixeira",       e: "Eletrocardiograma", s: "Em Aberto"  },
+    { id: "#EX04", p: "Luciano Moraes",      e: "Colesterol",        s: "Finalizado" },
   ]);
 
-  const [paciente, setPaciente] = useState('');
-  const [exameNome, setExameNome] = useState('');
-  const [status, setStatus] = useState('Pendente');
+  const [paciente,    setPaciente]    = useState('');
+  const [exameNome,   setExameNome]   = useState('');
+  const [status,      setStatus]      = useState('Pendente');
+  const [confirmarId, setConfirmarId] = useState(null);
 
-  const handleSalvarExame = (e) => {
+  const handleSalvar = (e) => {
     e.preventDefault();
     if (!paciente || !exameNome) return;
-
-    const novoItem = {
-      id: `#EX${String(listaExames.length + 1).padStart(2, '0')}`,
-      p: paciente,
-      e: exameNome, // Corrigido: ajustado o erro de digitação original 'examenNome'
-      s: status
-    };
-
-    setListaExames([novoItem, ...listaExames]);
-    setPaciente('');
-    setExameNome('');
-    setStatus('Pendente');
+    setListaExames([
+      { id: `#EX${String(listaExames.length + 1).padStart(2, '0')}`, p: paciente, e: exameNome, s: status },
+      ...listaExames,
+    ]);
+    setPaciente(''); setExameNome(''); setStatus('Pendente');
     setModalAberto(false);
   };
 
-  return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans text-[#0e2229] flex flex-col relative selection:bg-[#00d2c4]/20 p-6 md:p-8">
-      
-      <main className="flex-1 w-full max-w-[1600px] mx-auto space-y-6">
-        
-        {/* Botão Superior Alinhado com a Cor do Calendário */}
-        <div className="flex justify-end w-full">
-          <button 
-            onClick={() => setModalAberto(true)}
-            className="bg-[#00d2c4] hover:opacity-90 text-white px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide shadow-sm transition flex items-center gap-2 active:scale-95"
+  const handleExcluir = (id) => {
+    setListaExames(prev => prev.filter(ex => ex.id !== id));
+    setConfirmarId(null);
+  };
+
+  const initials = (nome) => nome.split(' ').map(n => n[0]).slice(0, 2).join('');
+
+  const StatusBadge = ({ s }) => {
+    const map = {
+      Finalizado:  { bg: '#E6FBF8', color: '#08D1BD', dot: '#08D1BD' },
+      Pendente:    { bg: '#FFF8E6', color: '#D97706', dot: '#D97706' },
+      'Em Aberto': { bg: '#E5F8FF', color: '#00405D', dot: '#5DBBE5' },
+    };
+    const st = map[s] || map['Em Aberto'];
+    return (
+      <span style={{
+        display: 'inline-flex', alignItems: 'center', gap: 4,
+        fontSize: 10, fontWeight: 600, padding: '3px 9px', borderRadius: 20,
+        backgroundColor: st.bg, color: st.color, flexShrink: 0,
+      }}>
+        <span style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: st.dot, display: 'inline-block' }} />
+        {s}
+      </span>
+    );
+  };
+
+  const Row = ({ exame }) => {
+    const confirmando = confirmarId === exame.id;
+    return (
+      <div
+        style={{
+          display: 'flex', alignItems: 'center', gap: 12,
+          padding: '11px 14px', borderBottom: '1px solid #F0FDFA',
+          cursor: 'default', transition: 'background .12s',
+          backgroundColor: confirmando ? '#FFF8F8' : 'transparent',
+        }}
+        onMouseEnter={e => { if (!confirmando) e.currentTarget.style.backgroundColor = '#F7FFFE'; }}
+        onMouseLeave={e => { if (!confirmando) e.currentTarget.style.backgroundColor = confirmando ? '#FFF8F8' : 'transparent'; }}
+      >
+        {/* Avatar */}
+        <div style={{
+          width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
+          backgroundColor: '#E5F8FF', color: '#08D1BD',
+          fontSize: 10, fontWeight: 700,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          {initials(exame.p)}
+        </div>
+
+        {/* Nome */}
+        <span style={{ width: 180, flexShrink: 0, fontSize: 13, fontWeight: 500, color: '#171717' }}>
+          {exame.p}
+        </span>
+
+        {/* Exame */}
+        <span style={{ flex: 1, fontSize: 11, fontWeight: 500, color: '#464646' }}>
+          {exame.e}
+        </span>
+
+        {/* ID */}
+        <span style={{ width: 60, flexShrink: 0, fontSize: 11, fontFamily: 'monospace', color: '#94A3B8', textAlign: 'right' }}>
+          {exame.id}
+        </span>
+
+        {/* Status */}
+        <StatusBadge s={exame.s} />
+
+        {/* Excluir */}
+        {confirmando ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+            <span style={{ fontSize: 11, color: '#94A3B8', whiteSpace: 'nowrap' }}>Excluir?</span>
+            <button
+              onClick={() => handleExcluir(exame.id)}
+              style={{ padding: '3px 10px', borderRadius: 8, border: 'none', backgroundColor: '#FDECEA', color: '#E53E3E', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}
+            >
+              Sim
+            </button>
+            <button
+              onClick={() => setConfirmarId(null)}
+              style={{ padding: '3px 10px', borderRadius: 8, border: 'none', backgroundColor: '#E5F8FF', color: '#00405D', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}
+            >
+              Não
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setConfirmarId(exame.id)}
+            title="Excluir exame"
+            style={{
+              flexShrink: 0, width: 28, height: 28, borderRadius: 8,
+              border: 'none', backgroundColor: 'transparent', color: '#CBD5E1',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .15s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#FDECEA'; e.currentTarget.style.color = '#E53E3E'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#CBD5E1'; }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
             </svg>
-            Adicionar Resultado
           </button>
-        </div>
+        )}
+      </div>
+    );
+  };
 
-        {/* Tabela de Laudos */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden w-full">
-          <div className="bg-slate-50/80 border-b border-slate-100 px-6 py-4 text-xs font-black text-slate-400 uppercase tracking-wider">
-            Laudos Clínicos Ativos e Histórico Recente
-          </div>
-          
-          <div className="overflow-x-auto w-full">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
-                  <th className="px-6 py-3.5 w-24">Código ID</th>
-                  <th className="px-6 py-3.5">Nome do Paciente</th>
-                  <th className="px-6 py-3.5">Exame Clínico</th>
-                  <th className="px-6 py-3.5 text-center w-36">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {listaExames.map((exame) => (
-                  <tr key={exame.id} className="hover:bg-[#00d2c4]/5 transition group">
-                    <td className="px-6 py-4 font-mono font-bold text-slate-400 text-sm">{exame.id}</td>
-                    <td className="px-6 py-4 font-bold text-slate-900 text-sm group-hover:text-[#00d2c4] transition">{exame.p}</td>
-                    <td className="px-6 py-4 text-slate-600 font-medium">{exame.e}</td>
-                    <td className="px-6 py-4 text-center">
-                      <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-wider inline-block w-24 text-center shadow-sm ${
-                        // Modificado: Alinhado com o padrão verde com texto branco do calendário
-                        exame.s === 'Finalizado' ? 'bg-[#00d2c4] text-white' :
-                        exame.s === 'Pendente' ? 'bg-[#0e2229] text-white' : 'bg-[#f1f5f9] text-[#64748b]'
-                      }`}>{exame.s}</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+  const inputStyle = {
+    width: '100%', padding: '8px 12px', border: '1px solid #E5F8FF',
+    borderRadius: 10, backgroundColor: '#F7FFFE', fontSize: 12,
+    color: '#374151', outline: 'none', fontFamily: "'Inter', sans-serif",
+  };
+  const labelStyle = { fontSize: 11, fontWeight: 600, color: '#374151', marginBottom: 4, display: 'block' };
 
-      </main>
+  return (
+    <div style={{ minHeight: '100vh', backgroundColor: '#E5F8FF', fontFamily: "'Inter', sans-serif", padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 20 }}>
 
-      {/* Modal de Cadastro */}
-      {modalAberto && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-100 space-y-4">
-            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-              <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide">Novo Resultado de Exame</h3>
-              <button onClick={() => setModalAberto(false)} className="text-slate-400 hover:text-slate-600 transition text-lg font-bold">✕</button>
+      {/* Topo */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <button
+          onClick={() => setModalAberto(true)}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            backgroundColor: '#08D1BD', color: '#fff', border: 'none',
+            borderRadius: 12, padding: '7px 14px', fontSize: 11, fontWeight: 600, cursor: 'pointer',
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = '.88'}
+          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+        >
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          Adicionar exame
+        </button>
+      </div>
+
+      {/* Lista */}
+      <div>
+        <p style={{ fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 8, paddingLeft: 2 }}>Exames</p>
+        <div style={{ backgroundColor: '#fff', borderRadius: 14, overflow: 'hidden' }}>
+          {listaExames.length === 0 ? (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 48 }}>
+              <p style={{ fontSize: 12, color: '#94A3B8' }}>Nenhum exame registrado</p>
             </div>
+          ) : (
+            listaExames.map((ex) => <Row key={ex.id} exame={ex} />)
+          )}
+        </div>
+      </div>
 
-            <form onSubmit={handleSalvarExame} className="space-y-4 text-xs">
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-slate-700">Nome do Paciente</label>
-                <input 
-                  type="text" 
-                  value={paciente}
-                  onChange={(e) => setPaciente(e.target.value)}
-                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#00d2c4] focus:bg-white transition text-sm font-medium" 
-                  placeholder="Ex: Carlos Silva"
-                />
+      {/* Modal */}
+      {modalAberto && (
+        <div
+          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,64,93,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, zIndex: 50 }}
+          onClick={e => { if (e.target === e.currentTarget) setModalAberto(false); }}
+        >
+          <div style={{ backgroundColor: '#fff', borderRadius: 16, width: '100%', maxWidth: 400, padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: 12, borderBottom: '1px solid #E5F8FF' }}>
+              <p style={{ fontSize: 13, fontWeight: 600, color: '#00405D' }}>Novo exame</p>
+              <button onClick={() => setModalAberto(false)} style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: '#94A3B8', fontSize: 16, lineHeight: 1 }}>✕</button>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div>
+                <label style={labelStyle}>Nome do paciente</label>
+                <input type="text" value={paciente} onChange={e => setPaciente(e.target.value)} placeholder="Ex: Carlos Silva" style={inputStyle} />
               </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-slate-700">Nome do Exame</label>
-                <input 
-                  type="text" 
-                  value={exameNome}
-                  onChange={(e) => setExameNome(e.target.value)}
-                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#00d2c4] focus:bg-white transition text-sm font-medium" 
-                  placeholder="Ex: Hemograma Completo"
-                />
+              <div>
+                <label style={labelStyle}>Nome do exame</label>
+                <input type="text" value={exameNome} onChange={e => setExameNome(e.target.value)} placeholder="Ex: Hemograma Completo" style={inputStyle} />
               </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="font-bold text-slate-700">Status Inicial</label>
-                <select 
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-[#00d2c4] focus:bg-white transition text-sm font-bold w-full text-slate-700"
-                >
+              <div>
+                <label style={labelStyle}>Status</label>
+                <select value={status} onChange={e => setStatus(e.target.value)} style={inputStyle}>
                   <option>Pendente</option>
                   <option>Em Aberto</option>
                   <option>Finalizado</option>
                 </select>
               </div>
-
-              <div className="flex gap-2 pt-2 justify-end">
-                <button 
-                  type="button"
-                  onClick={() => setModalAberto(false)} 
-                  className="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-600 font-bold hover:bg-slate-200 transition"
-                >
-                  Cancelar
-                </button>
-                <button 
-                  type="submit" 
-                  className="px-4 py-2.5 rounded-xl bg-[#00d2c4] text-white font-bold hover:opacity-90 transition shadow-sm"
-                >
-                  Salvar Laudo
-                </button>
-              </div>
-            </form>
+            </div>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', paddingTop: 4 }}>
+              <button onClick={() => setModalAberto(false)} style={{ padding: '7px 14px', borderRadius: 10, border: 'none', backgroundColor: '#E5F8FF', color: '#00405D', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>
+                Cancelar
+              </button>
+              <button onClick={handleSalvar} style={{ padding: '7px 14px', borderRadius: 10, border: 'none', backgroundColor: '#08D1BD', color: '#fff', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>
+                Salvar
+              </button>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 }
+  
