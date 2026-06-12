@@ -2145,3 +2145,9 @@ body {
 .btn-deletar-conta-menu:hover {
     background-color: #fff5f5 !important;
 }
+
+.btn-login-submit-final:focus,
+.btn-login-submit-final:active {
+    outline: none !important;
+    box-shadow: none !important;
+}

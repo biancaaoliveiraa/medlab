@@ -301,6 +301,14 @@ function App() {
             else if (numeros.length > 0) inputValue = numeros.replace(/^(\d{0,2})/, '($1');
         }
 
+        if (name === 'dataNascimento' && value) {
+            const partes = value.split('-');
+            if (partes[0] && partes[0].length > 4) {
+                partes[0] = partes[0].slice(0, 4);
+                inputValue = partes.join('-');
+            }
+        }
+
         setFormData(prev => ({ ...prev, [name]: inputValue }));
     };
 
@@ -360,12 +368,13 @@ function App() {
         try {
             const dadosParaEnviar = {
                 nomeCompleto: formData.nomeCompleto,
-                cpf: formData.cpf,
+                cpf: formData.cpf.replace(/\D/g, ''),
                 dataNascimento: formData.dataNascimento,
-                telefone: formData.telefone,
+                telefone: formData.telefone.replace(/\D/g, ''),
                 email: formData.email,
                 senha: formData.senha,
                 tipoConvenio: formData.tipoConvenio,
+
                 anamnese: {
                     sintomasAtuais: formData.anamnese.doencaCronicaDetalhe || "Nenhuma",
                     historicoDoencas: `Doença Crônica: ${formData.anamnese.possuiDoencaCronica} | Cirurgias: ${formData.anamnese.realizouCirurgias} | Tipo Sanguíneo: ${formData.anamnese.tipoSanguineo}`,
@@ -374,14 +383,19 @@ function App() {
                 }
             };
 
+
             const response = await fetch('http://localhost:8080/api/pacientes', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dadosParaEnviar)
             });
 
-            if (response.ok) setCadastroStep(7);
-            else alert('Erro ao realizar o cadastro.');
+            if (response.ok) {
+                setCadastroStep(7);
+            } else {
+                const erroDoJava = await response.text();
+                alert(`Erro do Servidor (Status ${response.status}): \n\n${erroDoJava}`);
+            }
         } catch (error) {
             alert('Não foi possível se conectar ao servidor.');
         }
@@ -469,7 +483,7 @@ function App() {
                             </div>
                             <div className="input-field-group-clean">
                                 <label>Data de Nascimento:</label>
-                                <input type="date" name="dataNascimento" value={formData.dataNascimento} onChange={handleInputChange} required style={{ ...inputStyleWithShadow, color: '#666' }} />
+                                <input type="date" name="dataNascimento" max="9999-12-31" value={formData.dataNascimento} onChange={handleInputChange} required style={{ ...inputStyleWithShadow, color: '#666' }} />
                             </div>
                             <div className="input-field-group-clean">
                                 <label>CPF:</label>

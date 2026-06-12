@@ -1,0 +1,14 @@
+target/
+.settings/
+.classpath
+.project
+.idea/
+*.class
+
+medlab-front/node_modules/
+medlab-front/dist/
+medlab-front/.vite/
+
+.DS_Store
+Thumbs.db
+*.log

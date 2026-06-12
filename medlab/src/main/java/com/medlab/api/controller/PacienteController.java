@@ -57,6 +57,10 @@ public class PacienteController {
 
     @PostMapping
     public ResponseEntity<Paciente> cadastrarPaciente(@RequestBody Paciente paciente) {
+        if (paciente.getAnamnese() != null) {
+            paciente.getAnamnese().setPaciente(paciente);
+        }
+
         Paciente novoPaciente = pacienteRepository.save(paciente);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPaciente);
     }
@@ -70,26 +74,7 @@ public class PacienteController {
             paciente.setTelefone(dadosAtualizados.getTelefone());
             paciente.setEmail(dadosAtualizados.getEmail());
             paciente.setSenha(dadosAtualizados.getSenha());
-            paciente.setTipoConvenio(dadosAtualizados.getTipoConvenio());
-            paciente.setObservacoes(dadosAtualizados.getObservacoes());
-            paciente.setTipoUsuario(dadosAtualizados.getTipoUsuario());
-            paciente.setStatus(dadosAtualizados.getStatus());
 
-            pacienteRepository.save(paciente);
-            return ResponseEntity.ok(paciente);
-        }).orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{id}/endereco")
-    public ResponseEntity<?> atualizarEndereco(@PathVariable Long id, @RequestBody Map<String, String> endereco) {
-        return pacienteRepository.findById(id).map(paciente -> {
-            paciente.setCep(endereco.get("cep"));
-            paciente.setLogradouro(endereco.get("logradouro"));
-            paciente.setNumero(endereco.get("numero"));
-            paciente.setComplemento(endereco.get("complemento"));
-            paciente.setBairro(endereco.get("bairro"));
-            paciente.setCidade(endereco.get("cidade"));
-            paciente.setEstado(endereco.get("estado"));
 
             pacienteRepository.save(paciente);
             return ResponseEntity.ok(paciente);
@@ -109,6 +94,7 @@ public class PacienteController {
         return ResponseEntity.ok().build();
     }
 
+
     @PostMapping("/{id}/agendamentos")
     public ResponseEntity<?> adicionarAgendamento(@PathVariable Long id, @RequestBody Agendamentos agendamento) {
         return pacienteRepository.findById(id).map(paciente -> {
@@ -123,7 +109,6 @@ public class PacienteController {
         if (!agendamentosRepository.existsById(agendamentoId)) {
             return ResponseEntity.notFound().build();
         }
-
         agendamentosRepository.deleteById(agendamentoId);
         return ResponseEntity.ok().build();
     }
